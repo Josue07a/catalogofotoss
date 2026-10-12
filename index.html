@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff1f6">
+<title> JOSUE PHOTOGRAPHER | Paquetes</title>
+
+<style>
+:root {
+  --rosa: #427723;
+  --fondo: #8acfcfde;
+  --texto: #000000;
+  --borde: #235a74;
+}
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: var(--texto);
+  background: var(--fondo);
+  line-height: 1.5;
+}
+
+header {
+  text-align: center;
+  padding: 36px 16px;
+  background: linear-gradient(135deg,#ffe4ef,#f0e7ff);
+}
+
+header h1 { margin: 8px 0; font-size: clamp(28px,6vw,42px); }
+header p { margin: 8px auto; max-width: 520px; }
+.contacto { color: var(--rosa); font-weight: bold; }
+
+main { width: min(1100px, 95%); margin: auto; }
+
+h2 { font-size: 23px; }
+.categoria { padding-top: 24px; scroll-margin-top: 12px; }
+.categoria > p { color: #000000ec; }
+
+.combos {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 15px;
+}
+
+.combo {
+  background: rgb(231, 238, 238);
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 5px 18px #fffafc;
+  min-width: 0;
+}
+
+.combo h3 { margin: 0; font-size: 19px; }
+.precio { font-size: 29px; color: var(--rosa); font-weight: bold; margin: 8px 0; }
+.combo ul { padding-left: 20px; flex: 1; }
+.combo li { margin-bottom: 7px; }
+
+button, .whatsapp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  border: 0;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.elegir { background: var(--rosa); color: white; }
+.elegir:active, .whatsapp:active { transform: scale(.98); }
+.elegir:focus-visible, .whatsapp:focus-visible {
+  outline: 3px solid #7e3a9c;
+  outline-offset: 3px;
+}
+
+.seleccion {
+  margin: 35px 0;
+  padding: 22px;
+  background: rgb(248, 246, 246);
+  border: 2px solid var(--borde);
+  border-radius: 18px;
+  scroll-margin-top: 16px;
+}
+
+#resumen {
+  padding: 14px;
+  background: var(--fondo);
+  border-radius: 12px;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+
+.whatsapp { background: #000000; color: white; }
+.limpiar {
+  margin-top: 10px;
+  background: white;
+  color: var(--texto);
+  border: 1px solid var(--borde);
+}
+
+footer { text-align: center; padding: 25px 12px 90px; color: #766875; }
+
+.barra {
+  position: fixed;
+  z-index: 5;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 14px;
+  background: #ffffffed;
+  border-top: 1px solid var(--borde);
+}
+.barra a {
+  display: block;
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
+  color: white;
+  background: #16894f;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+@media (max-width: 760px) {
+  .combos { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  .combo { padding: 14px; }
+  .combo h3 { font-size: 17px; }
+  .precio { font-size: 25px; }
+}
+
+@media (max-width: 430px) {
+  main { width: 94%; }
+  header { padding: 30px 15px; }
+  .combos { grid-template-columns: 1fr; }
+  .combo { padding: 19px; }
+  .combo h3 { font-size: 20px; }
+  .precio { font-size: 20px; }
+  button, .whatsapp { min-height: 50px; }
+}
+</style>
+</head>
+
+<body>
+ 
+<header>
+  <h1>JOSUE PHOTOGRAPHER</h1>
+
+  <p>Momentos únicos, recuerdos para toda la vida.</p>
+
+  <p>Elige tu sesión y descubre el paquete ideal para ti.</p>
+
+  <p class="contacto">WhatsApp: +502 4106-3074</p>
+</header>
+
+<style>
+  .logo {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 20px;
+  }
+</style>
+<main>
+  <div id="catalogo"></div>
+
+  <section class="seleccion" id="seleccion">
+    <h2>💌 Tu paquete seleccionado</h2>
+    <p>Selecciona uno de nuestros combos para ver tu pedido.</p>
+    <div id="resumen" aria-live="polite" aria-atomic="true">
+      Todavía no has seleccionado un paquete.
+    </div>
+    <a id="enviar" class="whatsapp"
+       href="https://wa.me/50241063074"
+       target="_blank" rel="noopener noreferrer">
+       Consultar por WhatsApp
+    </a>
+    <button class="limpiar" id="limpiar" type="button">
+      Quitar selección
+    </button>
+  </section>
+</main>
+
+<footer>
+  <strong>JOSUE PHOTOGRAPHER</strong>
+  <p>Gracias por considerar mi trabajo para tus recuerdos.</p>
+</footer>
+
+<div class="barra">
+  <a href="#seleccion">💬 Ver selección y reservar</a>
+</div>
+
+<script>
+"use strict";
+
+const TELEFONO = "50241063074";
+
+const categorias = [
+  {
+    nombre: "Sesiones individuales",
+    icono: "📸",
+    descripcion: "Todos incluyen entrega digital.",
+    paquetes: [
+      ["🤍 Básico",250,"30 minutos","5 fotos editadas"],
+      ["💜 Premium",450,"1 hora","12 fotos editadas"],
+      ["✨ Deluxe",700,"1 hora y 30 minutos","20 fotos editadas","5 fotos impresas"]
+    ]
+  },
+  {
+    nombre: "Fotografía baby shower",
+    icono: "🍼",
+    descripcion: "Recuerdos de la decoración, familiares e invitados, según el paquete.",
+    paquetes: [
+      ["🌸 Dulce Espera",450,"1 hora","40 fotos editadas"],
+      ["🎀 Mi Baby Shower",750,"2 horas","80 fotos editadas"],
+      ["🧸 Recuerdos Eternos",1100,"3 horas","120 fotos editadas" , "10 fotos impresas"]
+    ]
+  },
+  {
+    nombre: "Fotografía de cumpleaños",
+    icono: "🎂",
+    descripcion: "Capturamos los mejores momentos de tu celebración.",
+    paquetes: [
+      ["🎈 Cumpleañitos",400,"1 hora","40 fotos editadas"],
+      ["🥳 Celebración",700,"2 horas","80 fotos editadas"],
+      ["🎉 Fiesta Completa",1000,"3 horas","120 fotos editadas","40 fotos impresas"]
+    ]
+  },
+  {
+    nombre: "Sesiones familiares",
+    icono: "👨‍👩‍👧‍👦",
+    descripcion: "Guarda recuerdos con las personas que más amas.",
+    paquetes: [
+      ["💚 Familia Mini",300,"30 minutos","8 fotos editadas","Hasta 4 integrantes"],
+      ["💚 Familia Feliz",500,"1 hora","15 fotos editadas","Hasta 6 integrantes"],
+      ["💚 Familia Completa",800,"1 hora y 30 minutos","25 fotos editadas","Hasta 10 integrantes"]
+    ]
+  },
+  {
+    nombre: "Sesiones de maternidad",
+    icono: "🤰",
+    descripcion: "Una etapa única merece recuerdos inolvidables.",
+    paquetes: [
+      ["🌷 Mamá",350,"30 minutos","8 fotos editadas"],
+      ["💕 Esperando Amor",550,"1 hora","15 fotos editadas","Mamá y pareja"],
+      ["🤍 Mi Bebé en Camino",800,"1 hora y 30 minutos","25 fotos editadas","Fotos individuales y familiares"]
+    ]
+  },
+  {
+    nombre: "Sesiones para parejas",
+    icono: "❤️",
+    descripcion: "Un recuerdo especial para compartir juntos.",
+    paquetes: [
+      ["💌 Combo Amor",300,"30 minutos","8 fotos editadas"],
+      ["💑 Nuestro Recuerdo",500,"1 hora","15 fotos editadas","3 fotos impresas"]
+    ]
+  },
+  {
+    nombre: "Sesiones para bebés y niños",
+    icono: "👶",
+    descripcion: "Conserva esos pequeños momentos que crecen tan rápido.",
+    paquetes: [
+      ["🧸 Pequeñas Sonrisas",300,"30 minutos","8 fotos editadas"],
+      ["🍼 Mi Primer Recuerdo",500,"1 hora","12 fotos editadas","Fotos con mamá o papá"]
+    ]
+  }
+];
+
+const catalogo = document.getElementById("catalogo");
+const resumen = document.getElementById("resumen");
+const enviar = document.getElementById("enviar");
+const seleccion = document.getElementById("seleccion");
+
+let paqueteActual = null;
+
+function crearCatalogo() {
+  categorias.forEach((categoria, indiceCategoria) => {
+    const seccion = document.createElement("section");
+    seccion.className = "categoria";
+    seccion.id = "categoria-" + indiceCategoria;
+
+    const titulo = document.createElement("h2");
+    titulo.textContent = categoria.icono + " " + categoria.nombre;
+    seccion.appendChild(titulo);
+
+    const descripcion = document.createElement("p");
+    descripcion.textContent = categoria.descripcion;
+    seccion.appendChild(descripcion);
+
+    const combos = document.createElement("div");
+    combos.className = "combos";
+
+    categoria.paquetes.forEach((datos, indicePaquete) => {
+      const [nombre, precio, ...detalles] = datos;
+      const tarjeta = document.createElement("article");
+      tarjeta.className = "combo";
+
+      const tituloPaquete = document.createElement("h3");
+      tituloPaquete.textContent = nombre;
+
+      const precioPaquete = document.createElement("div");
+      precioPaquete.className = "precio";
+      precioPaquete.textContent = "Q" + precio.toLocaleString("en-US");
+
+      const lista = document.createElement("ul");
+      detalles.forEach(detalle => {
+        const li = document.createElement("li");
+        li.textContent = detalle;
+        lista.appendChild(li);
+      });
+
+      const boton = document.createElement("button");
+      boton.type = "button";
+      boton.className = "elegir";
+      boton.textContent = "Me interesa este combo";
+      boton.addEventListener("click", () => {
+        seleccionarPaquete(categoria, datos);
+      });
+
+      tarjeta.append(tituloPaquete, precioPaquete, lista, boton);
+      combos.appendChild(tarjeta);
+    });
+
+    seccion.appendChild(combos);
+    catalogo.appendChild(seccion);
+  });
+}
+
+function seleccionarPaquete(categoria, datos) {
+  const [nombre, precio, ...detalles] = datos;
+
+  paqueteActual = {
+    categoria: categoria.nombre,
+    nombre,
+    precio,
+    detalles
+  };
+
+  resumen.replaceChildren();
+
+  const titulo = document.createElement("strong");
+  titulo.textContent = categoria.nombre + " — " + nombre;
+
+  const precioTexto = document.createElement("p");
+  precioTexto.textContent =
+    "Precio: Q" + precio.toLocaleString("en-US");
+
+  const lista = document.createElement("ul");
+  detalles.forEach(detalle => {
+    const li = document.createElement("li");
+    li.textContent = detalle;
+    lista.appendChild(li);
+  });
+
+  const confirmacion = document.createElement("p");
+  confirmacion.textContent =
+    "¡Perfecto! Este es el paquete que has elegido.";
+
+  resumen.append(titulo, precioTexto, lista, confirmacion);
+
+  const mensaje = [
+    "¡Hola!  Estoy interesado/a en una sesión de J.P Photography.",
+    "",
+    " Tema: " + categoria.nombre,
+    " Paquete: " + nombre,
+    " Precio: Q" + precio.toLocaleString("en-US"),
+    "Incluye: " + detalles.join(", "),
+    "",
+    "¿Qué fechas tienen disponibles?"
+  ].join("\n");
+
+  enviar.href =
+    "https://wa.me/" + TELEFONO + "?text=" +
+    encodeURIComponent(mensaje);
+
+  enviar.textContent = "Enviar " + nombre + " por WhatsApp";
+
+  // Lleva el resumen a la vista, especialmente útil en celulares.
+  seleccion.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+document.getElementById("limpiar").addEventListener("click", () => {
+  paqueteActual = null;
+  resumen.textContent = "Todavía no has seleccionado un paquete.";
+  enviar.href = "https://wa.me/" + TELEFONO;
+  enviar.textContent = "Consultar por WhatsApp";
+});
+
+crearCatalogo();
+</script>
+
+</body>
+</html>
